@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAllDevices } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
+import styles from './listDevice.module.css';
 
 interface Device {
   id: string;
@@ -33,11 +34,11 @@ const TestPage = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
-      <h1>Lista de Dispositivos</h1>
-      <ul>
+    <div className={styles.listContainer}>
+      <h1 className={styles.listTitle}>Lista de Dispositivos</h1>
+      <ul className={styles.deviceList}>
         {devices.map((device) => (
-          <li key={device.id}>
+          <li className={styles.deviceItem} key={device.id}>
             {device.name}
           </li>
         ))}

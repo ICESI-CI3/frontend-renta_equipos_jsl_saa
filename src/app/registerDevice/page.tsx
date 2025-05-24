@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { createDevice } from '../../services/deviceService';
+import styles from './registerDevice.module.css';
 
 const initialState = {
   name: '',
@@ -39,42 +40,42 @@ const CreateDevicePage = () => {
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: '0 auto', padding: 24 }}>
-      <h1>Crear Dispositivo</h1>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 12 }}>
-          <label>Nombre:</label>
-          <input type="text" name="name" value={form.name} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+    <div className={styles.registerDeviceContainer}>
+      <h1 className={styles.registerDeviceTitle}>Crear Dispositivo</h1>
+      <form className={styles.registerDeviceForm} onSubmit={handleSubmit}>
+        <div>
+          <label className={styles.registerDeviceLabel}>Nombre:</label>
+          <input type="text" name="name" value={form.name} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Descripción:</label>
-          <input type="text" name="description" value={form.description} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Descripción:</label>
+          <input type="text" name="description" value={form.description} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Tipo:</label>
-          <input type="text" name="type" value={form.type} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Tipo:</label>
+          <input type="text" name="type" value={form.type} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Estado:</label>
-          <input type="text" name="status" value={form.status} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Estado:</label>
+          <input type="text" name="status" value={form.status} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Propietario:</label>
-          <input type="text" name="owner" value={form.owner} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Propietario:</label>
+          <input type="text" name="owner" value={form.owner} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Imagen (URL):</label>
-          <input type="text" name="image" value={form.image} onChange={handleChange} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Imagen (URL):</label>
+          <input type="text" name="image" value={form.image} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
-        <div style={{ marginBottom: 12 }}>
-          <label>Stock:</label>
-          <input type="number" name="stock" value={stock} min={1} onChange={e => setStock(Number(e.target.value))} required style={{ width: '100%', padding: 8 }} />
+        <div>
+          <label className={styles.registerDeviceLabel}>Stock:</label>
+          <input type="number" name="stock" value={stock} min={1} onChange={e => setStock(Number(e.target.value))} required className={styles.registerDeviceInput} />
         </div>
-        <button type="submit" disabled={loading} style={{ padding: 10, width: '100%' }}>
+        <button type="submit" disabled={loading} className={styles.registerDeviceButton}>
           {loading ? 'Creando...' : 'Crear Dispositivo'}
         </button>
       </form>
-      {message && <div style={{ marginTop: 16 }}>{message}</div>}
+      {message && <div className={styles.registerDeviceMessage}>{message}</div>}
     </div>
   );
 };

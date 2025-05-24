@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import register from '../../services/authService';
+import styles from './register.module.css';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -25,14 +26,42 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
-      <h1>Registro</h1>
-      <input value={name} onChange={e => setUsername(e.target.value)} placeholder="Usuario" />
-      <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" />
-      <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" type="password" />
-      <input value={cellphone} onChange={e => setCellphone(e.target.value)} placeholder="Celular" />
-      <input value={address} onChange={e => setAddress(e.target.value)} placeholder="Dirección" />
-      <button onClick={handleRegister}>Registrarse</button>
+    <div className={styles.registerContainer}>
+      <h1 className={styles.registerTitle}>Registro</h1>
+      <input
+        className={styles.registerInput}
+        value={name}
+        onChange={e => setUsername(e.target.value)}
+        placeholder="Usuario"
+      />
+      <input
+        className={styles.registerInput}
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input
+        className={styles.registerInput}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
+        placeholder="Password"
+        type="password"
+      />
+      <input
+        className={styles.registerInput}
+        value={cellphone}
+        onChange={e => setCellphone(e.target.value)}
+        placeholder="Celular"
+      />
+      <input
+        className={styles.registerInput}
+        value={address}
+        onChange={e => setAddress(e.target.value)}
+        placeholder="Dirección"
+      />
+      <button className={styles.registerButton} onClick={handleRegister}>
+        Registrarse
+      </button>
     </div>
   );
 }
