@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import register from '../../services/authService';
+import { register } from '../../services/authService';
 import styles from './register.module.css';
 
 export default function RegisterPage() {
@@ -15,9 +15,7 @@ export default function RegisterPage() {
 
   const handleRegister = async () => {
     try {
-      await register({
-        data: { name, email, password, cellphone, address }
-      });
+      await register({ name, email, password, cellphone, address });
       alert('Registro exitoso'); 
       router.push('/login');
     } catch (error) {
