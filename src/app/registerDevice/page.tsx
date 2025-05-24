@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { createDevice } from '../../services/deviceService';
 import styles from './registerDevice.module.css';
 
@@ -18,6 +18,8 @@ const CreateDevicePage = () => {
   const [stock, setStock] = useState(1);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [dragActive, setDragActive] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,6 +39,41 @@ const CreateDevicePage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setForm({ ...form, image: url });
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setForm({ ...form, image: url });
+    }
+  };
+
+  const handleBrowseClick = () => {
+    fileInputRef.current?.click();
   };
 
   return (
@@ -64,8 +101,45 @@ const CreateDevicePage = () => {
           <input type="text" name="owner" value={form.owner} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
         <div>
-          <label className={styles.registerDeviceLabel}>Imagen (URL):</label>
-          <input type="text" name="image" value={form.image} onChange={handleChange} required className={styles.registerDeviceInput} />
+          <label className={styles.registerDeviceLabel}>Imagen (URL o archivo):</label>
+          <div
+            style={{
+              border: dragActive ? '2px solid #6366f1' : '2px dashed #d1d5db',
+              borderRadius: 8,
+              padding: 16,
+              textAlign: 'center',
+              background: dragActive ? '#e0e7ff' : '#f9fafb',
+              marginBottom: 12,
+              cursor: 'pointer',
+              transition: 'background 0.2s, border 0.2s',
+            }}
+            onDrop={handleImageDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onClick={handleBrowseClick}
+          >
+            {form.image ? (
+              <img src={form.image} alt="Imagen del dispositivo" style={{ maxWidth: 120, maxHeight: 120, margin: '0 auto', borderRadius: 8, display: 'block' }} />
+            ) : (
+              <span>Arrastra una imagen aquí o haz clic para buscar en tu equipo</span>
+            )}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleImageSelect}
+            />
+          </div>
+          <input
+            type="text"
+            name="image"
+            value={form.image}
+            onChange={handleChange}
+            placeholder="URL de la imagen (opcional)"
+            className={styles.registerDeviceInput}
+            style={{ marginTop: 8 }}
+          />
         </div>
         <div>
           <label className={styles.registerDeviceLabel}>Stock:</label>

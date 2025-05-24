@@ -18,4 +18,9 @@ export const createDevice = async (stock: number, data: any) => {
   return response.data;
 };
 
-export default api; 
+export const getDeviceByName = async (name: string) => {
+  const response = await api.get(`/api/v1/devices/by-name/${name}`);
+  return response.data;
+};
+
+export default api;
