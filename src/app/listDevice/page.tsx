@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllDevices, getDeviceByName } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
 import styles from './listDevice.module.css';
+import Link from 'next/link';
 
 interface Device {
   id: string;
@@ -97,6 +98,27 @@ const TestPage = () => {
           </li>
         ))}
       </ul>
+      <Link href="/registerDevice">
+        <button
+          style={{
+            position: 'fixed',
+            bottom: 32,
+            right: 32,
+            background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 50,
+            padding: '18px 28px',
+            fontSize: '1.1rem',
+            fontWeight: 700,
+            boxShadow: '0 4px 16px rgba(99,102,241,0.13)',
+            cursor: 'pointer',
+            zIndex: 1000
+          }}
+        >
+          Crear Nuevo Device
+        </button>
+      </Link>
     </div>
   );
 };

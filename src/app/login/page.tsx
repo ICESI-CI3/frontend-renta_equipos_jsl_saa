@@ -13,7 +13,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       await login({ email, password });
-      router.push('/');
+      router.push('/welcome');
     } catch (error) {
       alert('Error al iniciar sesión');
     }

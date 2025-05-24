@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { createDevice } from '../../services/deviceService';
+import { useRouter } from 'next/navigation';
 import styles from './registerDevice.module.css';
 
 const initialState = {
@@ -20,6 +21,7 @@ const CreateDevicePage = () => {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -34,6 +36,7 @@ const CreateDevicePage = () => {
       setMessage('Dispositivo creado exitosamente');
       setForm(initialState);
       setStock(1);
+      router.push('/listDevice');
     } catch (error: any) {
       setMessage(error?.response?.data?.message || 'Error al crear el dispositivo');
     } finally {

@@ -1,9 +1,14 @@
 // src/app/page.tsx
+import styles from './home.module.css';
+import Link from 'next/link';
+
 export default function HomePage() {
   return (
-    <div>
-      <h1>Bienvenido a la página de inicio</h1>
-      <p>Esta es la página principal de tu aplicación Next.js</p>
+    <div className={styles.homeContainer}>
+      <div className={styles.homeLinks}>
+        <Link className={styles.homeLink} href="/login">Login</Link>
+        <Link className={styles.homeLink} href="/register">Registro</Link>
+      </div>
     </div>
   );
 }
