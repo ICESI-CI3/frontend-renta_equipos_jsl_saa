@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import api, { getAllDevices } from '../../lib/api';
+import { getAllDevices } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
 
 interface Device {
   id: string;

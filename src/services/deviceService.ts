@@ -1,4 +1,3 @@
-// src/lib/api.ts
 import axios from 'axios';
 
 const api = axios.create({
@@ -14,4 +13,9 @@ export const getAllDevices = async () => {
   return response.data;
 };
 
-export default api;
+export const createDevice = async (stock: number, data: any) => {
+  const response = await api.post(`/api/v1/devices/${stock}`, data);
+  return response.data;
+};
+
+export default api; 
