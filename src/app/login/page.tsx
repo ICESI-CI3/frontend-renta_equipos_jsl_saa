@@ -13,6 +13,10 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       await login({ email, password });
+      // Guardar el email del usuario en localStorage para usarlo en la app
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('user_email', email);
+      }
       router.push('/welcome');
     } catch (error) {
       alert('Error al iniciar sesión');
