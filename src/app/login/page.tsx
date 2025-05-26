@@ -9,6 +9,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -23,6 +24,10 @@ export default function LoginPage() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <div className={styles.loginContainer}>
       <h1 className={styles.loginTitle}>Login</h1>
@@ -32,13 +37,21 @@ export default function LoginPage() {
         onChange={e => setEmail(e.target.value)}
         placeholder="Email"
       />
-      <input
-        className={styles.loginInput}
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Password"
-        type="password"
-      />
+      <div className={styles.passwordContainer}>
+        <input
+          className={styles.loginInput}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          placeholder="Password"
+          type={isVisible ? "text" : "password"}
+        />
+        <span 
+          className={styles.visibilityToggle}
+          onClick={togglePasswordVisibility}
+        >
+          {isVisible ? "👁️" : "👁️‍🗨️"}
+        </span>
+      </div>
       <button className={styles.loginButton} onClick={handleLogin}>
         Iniciar sesión
       </button>

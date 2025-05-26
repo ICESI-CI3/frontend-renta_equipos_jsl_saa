@@ -46,3 +46,21 @@
 .loginButton:hover {
   background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
 }
+
+.passwordContainer {
+  position: relative;
+  width: 100%;
+}
+
+.passwordContainer input {
+  width: 100%;
+}
+
+.visibilityToggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+}
