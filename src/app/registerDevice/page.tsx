@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { createDevice } from '../../services/deviceService';
 import { useRouter } from 'next/navigation';
 import styles from './registerDevice.module.css';
+import withAuth from '../withAuth';
 
 const initialState = {
   name: '',
@@ -157,4 +158,5 @@ const CreateDevicePage = () => {
   );
 };
 
-export default CreateDevicePage;
+const ProtectedRegisterDevicePage = withAuth(CreateDevicePage);
+export default ProtectedRegisterDevicePage;

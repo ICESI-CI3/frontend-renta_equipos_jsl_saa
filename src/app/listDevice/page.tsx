@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { getAllDevices, getDeviceByName } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
 import styles from './listDevice.module.css';
 import Link from 'next/link';
+import withAuth from '../withAuth';
 
 interface Device {
   id: string;
@@ -123,4 +124,5 @@ const TestPage = () => {
   );
 };
 
-export default TestPage;
+const ProtectedListDevicePage = withAuth(TestPage);
+export default ProtectedListDevicePage;

@@ -1,7 +1,8 @@
 import styles from '../home.module.css';
 import Link from 'next/link';
+import withAuth from '../withAuth';
 
-export default function DashboardPage() {
+function DashboardPage() {
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.homeTitle}>Panel de Dispositivos</h1>
@@ -15,3 +16,6 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+const ProtectedDashboardPage = withAuth(DashboardPage);
+export default ProtectedDashboardPage;

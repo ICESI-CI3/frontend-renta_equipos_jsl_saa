@@ -1,7 +1,9 @@
+"use client";
 import styles from '../home.module.css';
 import Link from 'next/link';
+import withAuth from '../withAuth';
 
-export default function WelcomePage() {
+function WelcomePage() {
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.homeTitle}>Bienvenido a la aplicacion</h1>
@@ -13,3 +15,6 @@ export default function WelcomePage() {
     </div>
   );
 }
+
+const ProtectedWelcomePage = withAuth(WelcomePage);
+export default ProtectedWelcomePage;

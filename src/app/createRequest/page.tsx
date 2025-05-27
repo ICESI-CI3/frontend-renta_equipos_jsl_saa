@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createRequest } from "@/services/requestService";
 import styles from "./createRequest.module.css";
+import withAuth from "../withAuth";
 
-export default function CreateRequestPage() {
+function CreateRequestPage() {
   const router = useRouter();
   const [user_email, setUserEmail] = useState("");
   const [date_Start, setDateStart] = useState("");
@@ -82,3 +83,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     </div>
   );
 }
+
+const ProtectedCreateRequestPage = withAuth(CreateRequestPage);
+export default ProtectedCreateRequestPage;
