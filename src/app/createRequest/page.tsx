@@ -7,7 +7,6 @@ import withAuth from "../withAuth";
 
 function CreateRequestPage() {
   const router = useRouter();
-  const [user_email, setUserEmail] = useState("");
   const [date_Start, setDateStart] = useState("");
   const [date_Finish, setDateFinish] = useState("");
   const [admin_comment, setAdminComment] = useState("");
@@ -37,15 +36,19 @@ interface CreateRequestData {
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    // Validar que las fechas estén presentes
     if (!date_Start || !date_Finish) {
       setError("Debes ingresar ambas fechas");
+      return;
+    }
+    // Obtener el email del usuario logueado desde localStorage
+    const user_email = typeof window !== 'undefined' ? localStorage.getItem('user_email') || '' : '';
+    if (!user_email) {
+      setError("No se encontró el email del usuario. Inicia sesión nuevamente.");
       return;
     }
     try {
       await createRequest({
         user_email,
-        // Enviar fechas en formato ISO string
         date_Start: toISOStringIfPossible(date_Start),
         date_Finish: toISOStringIfPossible(date_Finish),
         status: "pendiente",
@@ -61,10 +64,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     <div className={styles.formContainer}>
       <h2 className={styles.formTitle}>Crear nueva solicitud</h2>
       <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label className={styles.formLabel}>Usuario (email):</label>
-          <input type="email" className={styles.formInput} value={user_email} onChange={e => setUserEmail(e.target.value)} required />
-        </div>
         <div className={styles.formGroup}>
           <label className={styles.formLabel}>Fecha inicio:</label>
           <input type="datetime-local" className={styles.formInput} value={date_Start} onChange={e => setDateStart(e.target.value)} required />

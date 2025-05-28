@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/register" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Registro</Link>
             <Link href="/registerDevice" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Crear Dispositivo</Link>
             <Link href="/listDevice" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Lista de Dispositivos</Link>
+            <Link href="/createRequest" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Crear Solicitud</Link>
           </nav>
         </header>
         <main style={{ minHeight: '70vh', maxWidth: 900, margin: '0 auto', padding: 24 }}>{children}</main>
