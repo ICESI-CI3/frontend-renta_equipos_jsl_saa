@@ -21,4 +21,10 @@ export const createRequest = async (data: {
   return response.data;
 };
 
+export const getAllRequests = async () => {
+  const response = await api.get('/api/v1/requests');
+  return response.data;
+}
+
+
 export default api;

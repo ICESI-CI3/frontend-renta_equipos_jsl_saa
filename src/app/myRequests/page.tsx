@@ -58,8 +58,8 @@ function MyRequestsPage() {
         setLoading(false);
         return;
       }
-      // Suponiendo que hay un endpoint para traer requests por email
-      const res = await api.get(`/api/v1/requests?user_email=${user_email}`);
+      // Usar el endpoint correcto para traer requests por email
+      const res = await api.get(`/api/v1/requests/by-user_email/${user_email}`);
       setRequests(res.data || res);
     } catch (err: any) {
       setError("Error al cargar las solicitudes");

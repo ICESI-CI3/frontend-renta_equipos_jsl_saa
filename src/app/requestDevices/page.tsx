@@ -43,7 +43,7 @@ function RequestDevicesPage() {
     setError("");
     setSuccess("");
     try {
-      const res = await api.get(`/api/v1/request-devices?request_id=${requestId}`);
+      const res = await api.get(`/api/v1/request-devices/by-requestId/${requestId}`);
       setRequestDevices(res.data || res);
     } catch (err: any) {
       setError("Error al cargar los dispositivos de la solicitud");

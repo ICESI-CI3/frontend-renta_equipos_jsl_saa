@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getAllDevices, getDeviceByName } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
 import styles from './listDevice.module.css';
 import Link from 'next/link';
@@ -20,6 +21,7 @@ interface Device {
 }
 
 const TestPage = () => {
+  const router = useRouter();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,7 +67,11 @@ const TestPage = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className={styles.listContainer}>
+    <div className={styles.listDeviceContainer}>
+      <div style={{display:'flex',justifyContent:'flex-end',gap:8,marginBottom:16}}>
+        <button className={styles.listDeviceButton} onClick={()=>router.push('/welcome')}>Volver al inicio</button>
+        <button className={styles.listDeviceButton} onClick={()=>router.push('/myRequests')}>Mis solicitudes</button>
+      </div>
       <form onSubmit={handleSearch} style={{ marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <input
           className={styles.deviceSearchInput}
