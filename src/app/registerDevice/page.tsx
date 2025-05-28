@@ -10,8 +10,6 @@ const initialState = {
   name: '',
   description: '',
   type: '',
-  status: '',
-  owner: '',
   image: '',
 };
 
@@ -33,7 +31,11 @@ const CreateDevicePage = () => {
     setLoading(true);
     setMessage('');
     try {
-      await createDevice(stock, form);
+      await createDevice(stock, {
+        ...form,
+        status: 'Disponible',
+        owner: 'admin@gmail.com',
+      } as any);
       setMessage('Dispositivo creado exitosamente');
       setForm(initialState);
       setStock(1);
@@ -95,14 +97,6 @@ const CreateDevicePage = () => {
         <div>
           <label className={styles.registerDeviceLabel}>Tipo:</label>
           <input type="text" name="type" value={form.type} onChange={handleChange} required className={styles.registerDeviceInput} />
-        </div>
-        <div>
-          <label className={styles.registerDeviceLabel}>Estado:</label>
-          <input type="text" name="status" value={form.status} onChange={handleChange} required className={styles.registerDeviceInput} />
-        </div>
-        <div>
-          <label className={styles.registerDeviceLabel}>Propietario:</label>
-          <input type="text" name="owner" value={form.owner} onChange={handleChange} required className={styles.registerDeviceInput} />
         </div>
         <div>
           <label className={styles.registerDeviceLabel}>Imagen (URL o archivo):</label>

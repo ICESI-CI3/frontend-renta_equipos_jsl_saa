@@ -23,4 +23,10 @@ export const getDeviceByName = async (name: string) => {
   return response.data;
 };
 
+
+export const getDeviceByStatus = async (status: string) => {
+  const response = await api.get(`/api/v1/devices/by-status/${status}`);
+  return response.data;
+};
+
 export default api;

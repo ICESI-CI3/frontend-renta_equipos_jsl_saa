@@ -47,14 +47,17 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       return;
     }
     try {
-      await createRequest({
+      // Guardar la request y obtener el id
+      const result = await createRequest({
         user_email,
         date_Start: toISOStringIfPossible(date_Start),
         date_Finish: toISOStringIfPossible(date_Finish),
         status: "pendiente",
         admin_comment,
       } as CreateRequestData);
-      router.push("/welcome");
+      // Suponiendo que el backend retorna el objeto creado o el id
+      const requestId = result.id || result.request_id || result;
+      router.push(`/createRequestDevice?requestId=${requestId}`);
     } catch (err: any) {
       setError(err.message);
     }
@@ -64,6 +67,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     <div className={styles.formContainer}>
       <h2 className={styles.formTitle}>Crear nueva solicitud</h2>
       <form onSubmit={handleSubmit}>
+        {/* Eliminar el campo de email del formulario */}
         <div className={styles.formGroup}>
           <label className={styles.formLabel}>Fecha inicio:</label>
           <input type="datetime-local" className={styles.formInput} value={date_Start} onChange={e => setDateStart(e.target.value)} required />
