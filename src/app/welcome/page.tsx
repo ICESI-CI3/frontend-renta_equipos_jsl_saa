@@ -10,7 +10,9 @@ function WelcomePage() {
       <p className={styles.homeDescription}></p>
       <div className={styles.homeLinks}>
         <Link className={styles.homeLink} href="/listDevice">Lista de equipos</Link>
+        <Link className={styles.homeLink} href="/registerDevice">Registrar equipo</Link>
         <Link className={styles.homeLink} href="/createRequest">Crear solicitud</Link>
+        <Link className={styles.homeLink} href="/myRequests">Mis Solicitudes</Link>
       </div>
     </div>
   );

@@ -9,6 +9,10 @@ interface Device {
   id: string;
   name: string;
   status: string;
+  description?: string;
+  type?: string;
+  owner?: string;
+  image?: string;
 }
 
 function CreateRequestDevicePage() {
@@ -24,6 +28,8 @@ function CreateRequestDevicePage() {
 
   // Buscar solo al presionar el botón
   const [filteredDevices, setFilteredDevices] = useState<Device[]>([]);
+  const [infoDevice, setInfoDevice] = useState<Device | null>(null);
+  const [showInfo, setShowInfo] = useState(false);
 
   useEffect(() => {
     fetchDevices();
@@ -112,23 +118,33 @@ function CreateRequestDevicePage() {
           {filteredDevices.map((device) => (
             <div key={device.id} className={styles.deviceItem}>
               <span>{device.name}</span>
-              {selectedDevices.some((d) => d.id === device.id) ? (
-                <button
-                  className={styles.removeBtn}
-                  onClick={() => handleRemove(device)}
-                  disabled={loading}
-                >
-                  Quitar de request
-                </button>
-              ) : (
+              <div style={{display:'flex',gap:8}}>
                 <button
                   className={styles.addBtn}
-                  onClick={() => handleAdd(device)}
+                  style={{background:'#888'}}
+                  onClick={() => { setInfoDevice(device); setShowInfo(true); }}
                   disabled={loading}
                 >
-                  Agregar a request
+                  Ver info
                 </button>
-              )}
+                {selectedDevices.some((d) => d.id === device.id) ? (
+                  <button
+                    className={styles.removeBtn}
+                    onClick={() => handleRemove(device)}
+                    disabled={loading}
+                  >
+                    Quitar de request
+                  </button>
+                ) : (
+                  <button
+                    className={styles.addBtn}
+                    onClick={() => handleAdd(device)}
+                    disabled={loading}
+                  >
+                    Agregar a request
+                  </button>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -142,6 +158,20 @@ function CreateRequestDevicePage() {
         {loading ? 'Guardando...' : 'Guardar'}
       </button>
       {success && <p style={{ color: '#388e3c', fontWeight: 600, marginTop: 12 }}>{success}</p>}
+      {showInfo && infoDevice && (
+        <div style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',background:'rgba(0,0,0,0.4)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000}} onClick={()=>setShowInfo(false)}>
+          <div style={{background:'#fff',padding:32,borderRadius:12,minWidth:320,maxWidth:400,position:'relative'}} onClick={e=>e.stopPropagation()}>
+            <h3 style={{marginTop:0}}>Información del dispositivo</h3>
+            <p><b>Nombre:</b> {infoDevice.name}</p>
+            {infoDevice.description && <p><b>Descripción:</b> {infoDevice.description}</p>}
+            {infoDevice.type && <p><b>Tipo:</b> {infoDevice.type}</p>}
+            {infoDevice.status && <p><b>Estado:</b> {infoDevice.status}</p>}
+            {infoDevice.owner && <p><b>Propietario:</b> {infoDevice.owner}</p>}
+            {infoDevice.image && <img src={infoDevice.image} alt="Imagen" style={{maxWidth:180,maxHeight:120,borderRadius:8,marginTop:8}} />}
+            <button style={{marginTop:16}} className={styles.addBtn} onClick={()=>setShowInfo(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

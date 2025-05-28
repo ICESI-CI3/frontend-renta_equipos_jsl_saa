@@ -1,0 +1,84 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.table th, .table td {
+  padding: 10px 8px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+.table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-danger {
+  background: #d32f2f;
+}
+.btn-info {
+  background: #888;
+}
+.success {
+  color: #388e3c;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.error {
+  color: #d32f2f;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.modal-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal {
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 400px;
+  position: relative;
+}
+.modal h3 {
+  margin-top: 0;
+}
+.modal img {
+  max-width: 180px;
+  max-height: 120px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
