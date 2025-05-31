@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/services/requestService";
 import deviceApi from "@/services/deviceService";
+import { getRoleByEmail } from "@/services/authService";
 import styles from "../myRequests/myRequests.module.css";
 import withAuth from "../withAuth";
 
@@ -33,9 +34,31 @@ function RequestDevicesPage() {
   const [success, setSuccess] = useState("");
   const [infoDevice, setInfoDevice] = useState<DeviceInfo | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     if (requestId) fetchRequestDevices(requestId);
+  }, [requestId]);
+
+    useEffect(() => {
+    // Obtener el rol del usuario
+    const fetchRole = async () => {
+      let emailValue = '';
+      if (typeof window !== 'undefined') {
+        emailValue = localStorage.getItem('user_email') || '';
+      }
+      if (!emailValue) {
+        setRole(null);
+        return;
+      }
+      try {
+        const userRole = await getRoleByEmail(emailValue);
+        setRole(userRole);
+      } catch {
+        setRole(null);
+      }
+    };
+    fetchRole();
   }, [requestId]);
 
   const fetchRequestDevices = async (requestId: string) => {
@@ -107,9 +130,11 @@ function RequestDevicesPage() {
                   <button className={styles["btn-info"] + " " + styles.btn} onClick={() => handleShowDeviceInfo(rd.device_id)}>
                     Ver info
                   </button>
-                  <button className={styles["btn-danger"] + " " + styles.btn} onClick={() => handleDeleteRequestDevice(rd.id)}>
-                    Borrar
-                  </button>
+                  {role === 'user' && (
+                    <button className={styles["btn-danger"] + " " + styles.btn} onClick={() => handleDeleteRequestDevice(rd.id)}>
+                      Borrar
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -130,7 +155,16 @@ function RequestDevicesPage() {
           </div>
         </div>
       )}
-      <button className={styles.btn} style={{marginTop:24}} onClick={() => router.push('/myRequests')}>Volver a mis solicitudes</button>
+      {/* Botón de regreso según el rol */}
+      {role === 'admin' ? (
+        <button className={styles.btn} style={{marginTop:24}} onClick={() => router.push('/allRequests')}>
+          Volver a todas las solicitudes
+        </button>
+      ) : (
+        <button className={styles.btn} style={{marginTop:24}} onClick={() => router.push('/myRequests')}>
+          Volver a mis solicitudes
+        </button>
+      )}
     </div>
   );
 }

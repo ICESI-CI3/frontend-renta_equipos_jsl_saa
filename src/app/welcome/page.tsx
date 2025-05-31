@@ -55,6 +55,7 @@ function WelcomePage() {
             <Link className={styles.homeLink} href="/registerDevice">Crear nuevo device</Link>
             <Link className={styles.homeLink} href="/listDevice">Ver todos los devices</Link>
             <Link className={styles.homeLink} href="/allRequests">Ver todas las requests</Link>
+            <Link className={styles.homeLink} href="/allContracts">Ver todos los contratos</Link>
           </>
         )}
         {/* USER VIEW */}

@@ -9,8 +9,8 @@ import styles from "./myRequests.module.css";
 interface Request {
   id: string;
   user_email: string;
-  date_Start: string;
-  date_Finish: string;
+  date_start: string;
+  date_finish: string;
   status: string;
   admin_comment?: string;
 }
@@ -139,8 +139,8 @@ function MyRequestsPage() {
               {requests.map((req) => (
                 <tr key={req.id}>
                   <td>{req.id}</td>
-                  <td>{req.date_Start}</td>
-                  <td>{req.date_Finish}</td>
+                  <td>{req.date_start ? new Date(req.date_start).toISOString().slice(0, 10) : '-'}</td>
+                  <td>{req.date_finish ? new Date(req.date_finish).toISOString().slice(0, 10) : '-'}</td>
                   <td>{req.status}</td>
                   <td>{req.admin_comment || '-'}</td>
                   <td>

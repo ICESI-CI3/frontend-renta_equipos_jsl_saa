@@ -69,8 +69,25 @@ const TestPage = () => {
   return (
     <div className={styles.listDeviceContainer}>
       <div style={{display:'flex',justifyContent:'flex-end',gap:8,marginBottom:16}}>
-        <button className={styles.listDeviceButton} onClick={()=>router.push('/welcome')}>Volver al inicio</button>
-        <button className={styles.listDeviceButton} onClick={()=>router.push('/myRequests')}>Mis solicitudes</button>
+        <button
+          className={styles.listDeviceButton}
+          style={{
+            background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 50,
+            padding: '12px 28px',
+            fontSize: '1rem',
+            fontWeight: 600,
+            boxShadow: '0 2px 8px rgba(99,102,241,0.13)',
+            cursor: 'pointer',
+            transition: 'background 0.2s',
+            zIndex: 1000
+          }}
+          onClick={()=>router.push('/welcome')}
+        >
+          Volver al inicio
+        </button>
       </div>
       <form onSubmit={handleSearch} style={{ marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <input

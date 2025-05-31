@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllRequests } from "@/services/requestService";
+import { getAllRequests, acceptRequest, rejectRequest } from "@/services/requestService";
+
 import { useRouter } from "next/navigation";
 import styles from "../myRequests/myRequests.module.css";
 import withAuth from "../withAuth";
@@ -37,6 +38,38 @@ function AllRequestsPage() {
     }
   };
 
+  const handleAccept = async (id: string) => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await acceptRequest(id);
+      alert("Respuesta aceptar: " + JSON.stringify(res));
+      fetchRequests();
+    } catch (err: any) {
+      setError("Error al aceptar la solicitud");
+      alert("Error aceptar: " + (err?.response?.data?.message || err.message || JSON.stringify(err)));
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReject = async (id: string) => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await rejectRequest(id);
+      alert("Respuesta eliminar: " + JSON.stringify(res));
+      fetchRequests();
+    } catch (err: any) {
+      setError("Error al eliminar la solicitud");
+      alert("Error eliminar: " + (err?.response?.data?.message || err.message || JSON.stringify(err)));
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div style={{display:'flex',justifyContent:'flex-end',marginBottom:16}}>
@@ -57,6 +90,7 @@ function AllRequestsPage() {
               <th>Fecha fin</th>
               <th>Estado</th>
               <th>Comentario</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -64,10 +98,21 @@ function AllRequestsPage() {
               <tr key={req.id}>
                 <td>{req.id}</td>
                 <td>{req.user_email}</td>
-                <td>{req.date_start}</td>
-                <td>{req.date_finish}</td>
+                <td>{req.date_start ? new Date(req.date_start).toISOString().slice(0, 10) : '-'}</td>
+                <td>{req.date_finish ? new Date(req.date_finish).toISOString().slice(0, 10) : '-'}</td>
                 <td>{req.status}</td>
                 <td>{req.admin_comment || '-'}</td>
+                <td>
+                  <button className={styles.btn} onClick={() => router.push(`/requestDevices?requestId=${req.id}`)}>
+                    Ver dispositivos
+                  </button>
+                  <button className={styles.btn} style={{marginLeft: 8, background: '#22c55e'}} onClick={() => handleAccept(req.id)}>
+                    Aceptar
+                  </button>
+                  <button className={styles.btn} style={{marginLeft: 8, background: '#ef4444'}} onClick={() => handleReject(req.id)}>
+                    Eliminar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
