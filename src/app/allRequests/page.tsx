@@ -19,6 +19,7 @@ function AllRequestsPage() {
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [acceptingId, setAcceptingId] = useState<string | null>(null); // Track which request is being accepted
   const router = useRouter();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ function AllRequestsPage() {
   };
 
   const handleAccept = async (id: string) => {
-    setLoading(true);
+    setAcceptingId(id); // Mark as accepting
     setError("");
     try {
       const res = await acceptRequest(id);
@@ -50,7 +51,7 @@ function AllRequestsPage() {
       alert("Error aceptar: " + (err?.response?.data?.message || err.message || JSON.stringify(err)));
       console.error(err);
     } finally {
-      setLoading(false);
+      setAcceptingId(null); // Reset accepting state
     }
   };
 
@@ -106,7 +107,17 @@ function AllRequestsPage() {
                   <button className={styles.btn} onClick={() => router.push(`/requestDevices?requestId=${req.id}`)}>
                     Ver dispositivos
                   </button>
-                  <button className={styles.btn} style={{marginLeft: 8, background: '#22c55e'}} onClick={() => handleAccept(req.id)}>
+                  <button
+                    className={styles.btn}
+                    style={{
+                      marginLeft: 8,
+                      background: '#22c55e',
+                      opacity: req.status === 'accepted' || acceptingId === req.id ? 0.5 : 1,
+                      pointerEvents: req.status === 'accepted' || acceptingId === req.id ? 'none' : 'auto',
+                    }}
+                    onClick={() => handleAccept(req.id)}
+                    disabled={req.status === 'accepted' || acceptingId === req.id}
+                  >
                     Aceptar
                   </button>
                   <button className={styles.btn} style={{marginLeft: 8, background: '#ef4444'}} onClick={() => handleReject(req.id)}>

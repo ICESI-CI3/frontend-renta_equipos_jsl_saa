@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAllDevices, getDeviceByName } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
+import { getRoleByEmail } from '../../services/authService';
 import styles from './listDevice.module.css';
 import Link from 'next/link';
 import withAuth from '../withAuth';
@@ -27,6 +28,28 @@ const TestPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Obtener el rol del usuario
+    const fetchRole = async () => {
+      let emailValue = '';
+      if (typeof window !== 'undefined') {
+        emailValue = localStorage.getItem('user_email') || '';
+      }
+      if (!emailValue) {
+        setRole(null);
+        return;
+      }
+      try {
+        const userRole = await getRoleByEmail(emailValue);
+        setRole(userRole);
+      } catch {
+        setRole(null);
+      }
+    };
+    fetchRole();
+  }, []);
 
   useEffect(() => {
     const fetchDevices = async () => {
@@ -69,25 +92,7 @@ const TestPage = () => {
   return (
     <div className={styles.listDeviceContainer}>
       <div style={{display:'flex',justifyContent:'flex-end',gap:8,marginBottom:16}}>
-        <button
-          className={styles.listDeviceButton}
-          style={{
-            background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 50,
-            padding: '12px 28px',
-            fontSize: '1rem',
-            fontWeight: 600,
-            boxShadow: '0 2px 8px rgba(99,102,241,0.13)',
-            cursor: 'pointer',
-            transition: 'background 0.2s',
-            zIndex: 1000
-          }}
-          onClick={()=>router.push('/welcome')}
-        >
-          Volver al inicio
-        </button>
+        <button className={styles.listDeviceButton} onClick={()=>router.push('/welcome')}>Volver al inicio</button>
       </div>
       <form onSubmit={handleSearch} style={{ marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <input
@@ -122,27 +127,29 @@ const TestPage = () => {
           </li>
         ))}
       </ul>
-      <Link href="/registerDevice">
-        <button
-          style={{
-            position: 'fixed',
-            bottom: 32,
-            right: 32,
-            background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 50,
-            padding: '18px 28px',
-            fontSize: '1.1rem',
-            fontWeight: 700,
-            boxShadow: '0 4px 16px rgba(99,102,241,0.13)',
-            cursor: 'pointer',
-            zIndex: 1000
-          }}
-        >
-          Crear Nuevo Device
-        </button>
-      </Link>
+      {role === 'admin' && (
+        <Link href="/registerDevice">
+          <button
+            style={{
+              position: 'fixed',
+              bottom: 32,
+              right: 32,
+              background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)',
+              color: '#fff',
+              border: 'none',
+              borderRadius: 50,
+              padding: '18px 28px',
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              boxShadow: '0 4px 16px rgba(99,102,241,0.13)',
+              cursor: 'pointer',
+              zIndex: 1000
+            }}
+          >
+            Crear Nuevo Device
+          </button>
+        </Link>
+      )}
     </div>
   );
 };

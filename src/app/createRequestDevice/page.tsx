@@ -60,7 +60,10 @@ function CreateRequestDevicePage() {
   };
 
   const handleAdd = (device: Device) => {
-    setSelectedDevices((prev) => [...prev, device]);
+    // Solo permite agregar un device si no está ya seleccionado (por id único)
+    if (!selectedDevices.some((d) => d.id === device.id)) {
+      setSelectedDevices((prev) => [...prev, device]);
+    }
   };
 
   const handleRemove = (device: Device) => {

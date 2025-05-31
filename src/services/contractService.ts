@@ -23,4 +23,10 @@ export const getContractDevicesByContractId = async (contractId: string) => {
   return response.data;
 };
 
+export const endContract = async (contractId: string) => {
+  // PATCH para finalizar contrato solo con el id
+  const response = await api.patch(`/api/v1/users/end-contract/${contractId}`);
+  return response.data;
+};
+
 export default api;

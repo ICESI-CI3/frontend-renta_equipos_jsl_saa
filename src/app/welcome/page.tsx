@@ -64,6 +64,7 @@ function WelcomePage() {
             <Link className={styles.homeLink} href="/listDevice">Lista de equipos</Link>
             <Link className={styles.homeLink} href="/myRequests">Mis solicitudes</Link>
             <Link className={styles.homeLink} href="/createRequest">Crear solicitud</Link>
+            <Link className={styles.homeLink} href="/myContracts">Mis contratos</Link>
           </>
         )}
         {/* Si no hay rol válido, mostrar mensaje */}
