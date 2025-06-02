@@ -1,0 +1,82 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Variants */
+.primary {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+}
+
+.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4338ca, #6d28d9);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+
+.secondary {
+  background: #f8fafc;
+  color: #475569;
+  border: 2px solid #e2e8f0;
+}
+
+.secondary:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* Sizes */
+.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.medium {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+}
+
+.large {
+  padding: 1rem 2.5rem;
+  font-size: 1.125rem;
+}
+
+/* Loading state */
+.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spinnerIcon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
