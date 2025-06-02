@@ -573,11 +573,7 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:8080
 
 ## 13. ANEXOS
 
-### 15.1 Estructura Completa de Archivos
-[Listado detallado de todos los archivos del proyecto]
-
-### 15.2 Endpoints de API Documentados
+### 13.1 Endpoints de API Documentados
 [Documentación completa de todos los endpoints utilizados]
 
-### 15.3 Tipos TypeScript Definidos
-[Listado completo de interfaces y tipos]
+
