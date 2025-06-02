@@ -1,9 +1,9 @@
 "use client";
 import styles from '../home.module.css';
-import Link from 'next/link';
-import withAuth from '../withAuth';
 import React from 'react';
 import { getRoleByEmail } from "@/services/authService";
+import withAuth from '../withAuth';
+import WelcomeLinks from '../../components/forms/WelcomeLinks';
 
 function WelcomePage() {
   // Obtener el rol del usuario desde el backend usando el email
@@ -48,30 +48,7 @@ function WelcomePage() {
   return (
     <div className={styles.homeContainer}>
       <h1 className={styles.homeTitle}>Bienvenido a la aplicacion</h1>
-      <div className={styles.homeLinks}>
-        {/* ADMIN VIEW */}
-        {role === 'admin' && (
-          <>
-            <Link className={styles.homeLink} href="/registerDevice">Crear nuevo device</Link>
-            <Link className={styles.homeLink} href="/listDevice">Ver todos los devices</Link>
-            <Link className={styles.homeLink} href="/allRequests">Ver todas las requests</Link>
-            <Link className={styles.homeLink} href="/allContracts">Ver todos los contratos</Link>
-          </>
-        )}
-        {/* USER VIEW */}
-        {role === 'user' && (
-          <>
-            <Link className={styles.homeLink} href="/listDevice">Lista de equipos</Link>
-            <Link className={styles.homeLink} href="/myRequests">Mis solicitudes</Link>
-            <Link className={styles.homeLink} href="/createRequest">Crear solicitud</Link>
-            <Link className={styles.homeLink} href="/myContracts">Mis contratos</Link>
-          </>
-        )}
-        {/* Si no hay rol válido, mostrar mensaje */}
-        {role !== 'admin' && role !== 'user' && !loading && (
-          <p className={styles.homeDescription}>No tienes permisos para ver opciones.</p>
-        )}
-      </div>
+      <WelcomeLinks role={role} loading={loading} />
     </div>
   );
 }
