@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllContracts, getContractDevicesByContractId } from "@/services/contractService";
+import { getAllContracts, getContractDevicesByContractId } from "@/services";
 import { useRouter } from "next/navigation";
 import styles from "../myRequests/myRequests.module.css";
 import withAuth from "../withAuth";

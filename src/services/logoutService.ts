@@ -1,6 +1,6 @@
 export function logout() {
   if (typeof window !== "undefined") {
-    localStorage.removeItem("user_email");
-    // Si tienes otros datos de sesión, bórralos aquí
+    localStorage.removeItem("token"); // Fixed: was "tok", should be "token"
+    // Clear any other session data if needed
   }
 }

@@ -1,24 +1,26 @@
 "use client";
 
 import React, { useState } from 'react';
-import { createDevice } from '../../services/deviceService';
+import { createDevice } from '@/services';
 import { useRouter } from 'next/navigation';
 import styles from './registerDevice.module.css';
 import withAuth from '../withAuth';
-import RegisterDeviceForm, { RegisterDeviceFormData } from '../../components/forms/RegisterDeviceForm';
+import { RegisterDeviceForm, RegisterDeviceFormData } from '@/components';
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 const CreateDevicePage = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const handleSubmit = async (data: RegisterDeviceFormData) => {
     setLoading(true);
     setMessage('');
-    // Obtener email del usuario logeado
-    let userEmail = '';
-    if (typeof window !== 'undefined') {
-      userEmail = localStorage.getItem('user_email') || '';
+    // Obtener email del usuario logeado desde el token
+    const userEmail = getUserEmailFromToken();
+    if (!userEmail) {
+      setMessage('Error: No se pudo obtener la información del usuario');
+      setLoading(false);
+      return;
     }
     try {
       await createDevice(1, {

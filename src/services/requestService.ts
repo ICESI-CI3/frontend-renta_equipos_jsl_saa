@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getToken } from '@/utils';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -27,7 +28,7 @@ export const getAllRequests = async () => {
 };
 
 export const acceptRequest = async (idRequest: string) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const token = getToken();
   const response = await api.patch(
     `/api/v1/users/accept/${idRequest}`,
     {},
@@ -37,7 +38,7 @@ export const acceptRequest = async (idRequest: string) => {
 };
 
 export const rejectRequest = async (idRequest: string) => {
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const token = getToken();
   const response = await api.patch(
     `/api/v1/users/reject/${idRequest}`,
     {},

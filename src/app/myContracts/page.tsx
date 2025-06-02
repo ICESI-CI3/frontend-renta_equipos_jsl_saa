@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getContractsByUserEmail, getContractDevicesByContractId, endContract } from "@/services/contractService";
+import { getContractsByUserEmail, getContractDevicesByContractId, endContract } from "@/services";
 import withAuth from "../withAuth";
 import styles from "../myRequests/myRequests.module.css";
 import { useRouter } from "next/navigation";
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 interface Contract {
   id: string;
@@ -31,16 +32,12 @@ function MyContractsPage() {
   const [error, setError] = useState("");
   const [endingContractId, setEndingContractId] = useState<string | null>(null);
   const router = useRouter();
-
   useEffect(() => {
     const fetchContracts = async () => {
       setLoading(true);
       setError("");
       try {
-        let email = '';
-        if (typeof window !== 'undefined') {
-          email = localStorage.getItem('user_email') || '';
-        }
+        const email = getUserEmailFromToken();
         if (!email) {
           setError("No se encontró el email del usuario. Inicia sesión nuevamente.");
           setLoading(false);

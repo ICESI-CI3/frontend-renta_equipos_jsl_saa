@@ -2,21 +2,24 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { logout } from "@/services/logoutService";
+import { getToken, isTokenExpired } from "@/utils";
 
 export default function withAuth(Component: React.ComponentType) {
   return function AuthenticatedComponent(props: any) {
     const router = useRouter();
+    
     useEffect(() => {
       if (typeof window !== "undefined") {
-        const userEmail = localStorage.getItem("user_email");
-        if (!userEmail) {
+        const token = getToken();
+        if (!token || isTokenExpired(token)) {
           router.replace("/login");
         }
       }
     }, [router]);
+    
     const handleLogout = () => {
-      logout();
+      // Clear token and redirect
+      localStorage.removeItem('token');
       router.replace("/login");
     };
     return (

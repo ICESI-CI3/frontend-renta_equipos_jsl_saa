@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { register } from '../../services/authService';
+import { register } from '@/services';
 import styles from './register.module.css';
-import RegisterForm from '@/components/forms/RegisterForm';
-import Card from '@/components/ui/Card';
-import { RegisterFormData } from '@/components/forms/RegisterForm';
+import { RegisterForm, Card, RegisterFormData } from '@/components';
 
 export default function RegisterPage() {
   const router = useRouter();

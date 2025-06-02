@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/services/requestService";
 import deviceApi from "@/services/deviceService";
-import { getRoleByEmail } from "@/services/authService";
+import { getRoleByEmail } from "@/services";
 import styles from "../myRequests/myRequests.module.css";
 import withAuth from "../withAuth";
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 interface RequestDevice {
   id: string;
@@ -24,7 +25,7 @@ interface DeviceInfo {
   image?: string;
 }
 
-function RequestDevicesPage() {
+function RequestDevicesPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestId = searchParams.get("requestId");
@@ -38,15 +39,10 @@ function RequestDevicesPage() {
 
   useEffect(() => {
     if (requestId) fetchRequestDevices(requestId);
-  }, [requestId]);
-
-    useEffect(() => {
+  }, [requestId]);  useEffect(() => {
     // Obtener el rol del usuario
     const fetchRole = async () => {
-      let emailValue = '';
-      if (typeof window !== 'undefined') {
-        emailValue = localStorage.getItem('user_email') || '';
-      }
+      const emailValue = getUserEmailFromToken();
       if (!emailValue) {
         setRole(null);
         return;
@@ -161,11 +157,18 @@ function RequestDevicesPage() {
           Volver a todas las solicitudes
         </button>
       ) : (
-        <button className={styles.btn} style={{marginTop:24}} onClick={() => router.push('/myRequests')}>
-          Volver a mis solicitudes
+        <button className={styles.btn} style={{marginTop:24}} onClick={() => router.push('/myRequests')}>        Volver a mis solicitudes
         </button>
       )}
     </div>
+  );
+}
+
+function RequestDevicesPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <RequestDevicesPageContent />
+    </Suspense>
   );
 }
 

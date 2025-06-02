@@ -5,6 +5,7 @@ import deviceApi from "@/services/deviceService";
 import { useRouter } from "next/navigation";
 import withAuth from "../withAuth";
 import styles from "./myRequests.module.css";
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 interface Request {
   id: string;
@@ -46,13 +47,12 @@ function MyRequestsPage() {
   useEffect(() => {
     fetchRequests();
   }, []);
-
   const fetchRequests = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
     try {
-      const user_email = typeof window !== 'undefined' ? localStorage.getItem('user_email') || '' : '';
+      const user_email = getUserEmailFromToken();
       if (!user_email) {
         setError("No se encontró el email del usuario. Inicia sesión nuevamente.");
         setLoading(false);

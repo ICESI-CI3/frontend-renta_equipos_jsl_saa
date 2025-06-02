@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createRequest } from "@/services/requestService";
+import { createRequest } from "@/services";
 import styles from "./createRequest.module.css";
 import withAuth from "../withAuth";
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 function CreateRequestPage() {
   const router = useRouter();
@@ -39,9 +40,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     if (!date_Start || !date_Finish) {
       setError("Debes ingresar ambas fechas");
       return;
-    }
-    // Obtener el email del usuario logueado desde localStorage
-    const user_email = typeof window !== 'undefined' ? localStorage.getItem('user_email') || '' : '';
+    }    // Obtener el email del usuario logueado desde el token
+    const user_email = getUserEmailFromToken();
     if (!user_email) {
       setError("No se encontró el email del usuario. Inicia sesión nuevamente.");
       return;

@@ -1,36 +1,36 @@
 'use client';
 
-import { JSX, useState } from 'react';
+import { JSX, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from '../../services/authService';
-import Card from '../../components/ui/Card';
-import LoginForm from '../../components/forms/LoginForm';
+import { Card, LoginForm } from '@/components';
 import styles from './login.module.css';
-import { LoginFormData } from '@/types/auth';
+import { LoginFormData } from '@/types';
+import { useAuth } from '@/hooks';
 
 export default function LoginPage(): JSX.Element {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-
+  const { login, isLoading, isAuthenticated } = useAuth();  // Redirigir si ya está autenticado
+  useEffect(() => {
+    console.log('🔍 LOGIN PAGE: isAuthenticated changed to:', isAuthenticated);
+    console.log('🔍 LOGIN PAGE: isLoading:', isLoading);
+    
+    // Only redirect if we're authenticated AND not loading
+    if (isAuthenticated && !isLoading) {
+      console.log('🔄 LOGIN PAGE: Redirecting to dashboard because isAuthenticated is true and not loading');
+      router.push('/dashboard');
+    }
+  }, [isAuthenticated, isLoading, router]);
   const handleLogin = async (formData: LoginFormData): Promise<void> => {
-    setIsLoading(true);
     setError('');
     
-    try {
-      await login(formData);
-      
-      // Guardar el email del usuario en localStorage para usarlo en la app
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('user_email', formData.email);
-      }
-      
-      router.push('/welcome');
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setError('Credenciales incorrectas. Por favor, intenta nuevamente.');
-    } finally {
-      setIsLoading(false);
+    const result = await login(formData);
+    console.log('Login result:', result);
+    
+    if (result && result.success) {
+      router.push('/dashboard');
+    } else {
+      setError(result?.error || 'Error al iniciar sesión');
     }
   };
 

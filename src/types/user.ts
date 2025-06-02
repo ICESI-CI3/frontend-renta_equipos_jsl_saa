@@ -1,5 +1,5 @@
 // src/types/user.ts
-export interface User {
+export interface UserData {
   id: string;
   username: string;
   email: string;
@@ -15,4 +15,5 @@ export interface RegisterData {
 export interface LoginData {
   email: string;
   password: string;
+
 }

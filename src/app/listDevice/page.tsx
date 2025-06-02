@@ -3,12 +3,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getAllDevices, getDeviceByName } from '../../services/deviceService'; // Asegúrate de que la ruta sea correcta
-import { getRoleByEmail } from '../../services/authService';
+import { getAllDevices, getDeviceByName, getRoleByEmail } from '@/services';
 import styles from './listDevice.module.css';
 import Link from 'next/link';
 import withAuth from '../withAuth';
-import DeviceList from '../../components/forms/DeviceList';
+import { DeviceList } from '@/components';
+import { getUserEmailFromToken, getUserRoleFromToken } from '../../utils/jwt';
 
 interface Device {
   id: string;
@@ -30,21 +30,26 @@ const TestPage = () => {
   const [search, setSearch] = useState('');
   const [searching, setSearching] = useState(false);
   const [role, setRole] = useState<string | null>(null);
-
   useEffect(() => {
-    // Obtener el rol del usuario
+    // Obtener el rol del usuario desde el token
     const fetchRole = async () => {
-      let emailValue = '';
-      if (typeof window !== 'undefined') {
-        emailValue = localStorage.getItem('user_email') || '';
-      }
+      const emailValue = getUserEmailFromToken();
+      const userRole = getUserRoleFromToken();
+      
       if (!emailValue) {
         setRole(null);
         return;
       }
-      try {
-        const userRole = await getRoleByEmail(emailValue);
+      
+      // Si ya tenemos el rol del token, lo usamos directamente
+      if (userRole) {
         setRole(userRole);
+        return;
+      }
+        // Fallback: obtener el rol del backend si no está en el token
+      try {
+        const userRoleFromBackend = await getRoleByEmail(emailValue);
+        setRole(userRoleFromBackend);
       } catch {
         setRole(null);
       }

@@ -2,7 +2,6 @@
 import './globals.css'; // Si tienes estilos globales
 import { ReactNode } from 'react';
 import MainNav from '../components/ui/MainNav';
-import Link from 'next/link';
 
 export const metadata = {
   title: 'Alquiler',
@@ -30,10 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           justifyContent: 'center', 
           gap: 32 
           }}>
-          <Link href="/" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Inicio</Link>
-          <Link href="/registerDevice" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Crear Dispositivo</Link>
-          <Link href="/listDevice" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Lista de Dispositivos</Link>
-          <Link href="/createRequest" style={{ color: '#fff', fontWeight: 600, fontSize: '1.1rem', textDecoration: 'none' }}>Crear Solicitud</Link>
+          <MainNav/>
         </nav>
       </header>
       <main style={{ 
