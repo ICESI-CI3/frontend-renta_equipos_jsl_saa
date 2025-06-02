@@ -1,20 +1,98 @@
-/* src/app/register/register.module.css */
 .registerContainer {
-  max-width: 420px;
-  margin: 60px auto;
-  padding: 32px 28px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7d96c5 0%, #2e6472 100%);
+}
+.registerContainer::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  right: -150px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: float 6s ease-in-out infinite;
+}
+.registerContainer::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  bottom: -100px;
+  left: -100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: float 8s ease-in-out infinite reverse;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(50px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 .registerTitle {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 24px;
-  color: #222;
+  margin-bottom: 2rem;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+}
+.content {
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem;
+}
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+.errorIcon {
+  font-size: 1rem;
+}
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+.footerText {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.link {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.link:hover {
+  color: #4338ca;
+  text-decoration: underline;
 }
 .registerInput {
   width: 100%;
@@ -45,4 +123,24 @@
 }
 .registerButton:hover {
   background: linear-gradient(90deg, #4f46e5 0%, #2563eb 100%);
+}
+/* Responsive */
+@media (max-width: 480px) {
+  .registerContainer::before {
+    width: 200px;
+    height: 200px;
+    top: -100px;
+    right: -100px;
+  }
+  
+  .registerContainer::after {
+    width: 150px;
+    height: 150px;
+    bottom: -75px;
+    left: -75px;
+  }
+  
+  .registerTitle {
+    font-size: 2rem;
+  }
 }

@@ -1,16 +1,28 @@
+"use client";
+
 import styles from '../home.module.css';
-import DashboardLinks from '../../components/forms/DashboardLinks';
-import withAuth from '../withAuth';
+import { DashboardLinks, ProtectedRoute } from '@/components';
+import { useAuth } from '@/hooks';
 
 function DashboardPage() {
+  const { user } = useAuth();
+
   return (
-    <div className={styles.homeContainer}>
-      <h1 className={styles.homeTitle}>Panel de Dispositivos</h1>
-      <p className={styles.homeDescription}>Aquí puedes ver la lista de dispositivos registrados y crear uno nuevo.</p>
-      <DashboardLinks />
-    </div>
+    <ProtectedRoute>
+      <div className={styles.homeContainer}>
+        <h1 className={styles.homeTitle}>
+          ¡Bienvenido {user?.email}! 👋
+        </h1>
+        <p className={styles.homeDescription}>
+          Panel de Dispositivos - Rol: <strong>{user?.role}</strong>
+        </p>
+        <p className={styles.homeDescription}>
+          Aquí puedes ver la lista de dispositivos registrados y crear uno nuevo.
+        </p>
+        <DashboardLinks />
+      </div>
+    </ProtectedRoute>
   );
 }
 
-const ProtectedDashboardPage = withAuth(DashboardPage);
-export default ProtectedDashboardPage;
+export default DashboardPage;

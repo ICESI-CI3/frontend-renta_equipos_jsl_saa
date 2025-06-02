@@ -1,23 +1,21 @@
 "use client";
 import styles from '../home.module.css';
 import React from 'react';
-import { getRoleByEmail } from "@/services/authService";
+import { getRoleByEmail } from "@/services";
 import withAuth from '../withAuth';
-import WelcomeLinks from '../../components/forms/WelcomeLinks';
+import { WelcomeLinks } from '@/components';
+import { getUserEmailFromToken } from '../../utils/jwt';
 
 function WelcomePage() {
   // Obtener el rol del usuario desde el backend usando el email
   const [role, setRole] = React.useState<string | null>(null);
   const [email, setEmail] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(true);
-
   React.useEffect(() => {
     const fetchRole = async () => {
-      let emailValue = '';
-      if (typeof window !== 'undefined') {
-        emailValue = localStorage.getItem('user_email') || '';
-        setEmail(emailValue);
-      }
+      const emailValue = getUserEmailFromToken();
+      setEmail(emailValue);
+      
       if (!emailValue) {
         setRole(null);
         setLoading(false);

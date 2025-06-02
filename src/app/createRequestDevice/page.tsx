@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import api, { getDeviceByStatus } from "@/services/deviceService";
+import { getDeviceByStatus } from "@/services";
+import api from "@/services/deviceService";
 import withAuth from "../withAuth";
 import styles from "./createRequestDevice.module.css";
 
@@ -15,7 +16,7 @@ interface Device {
   image?: string;
 }
 
-function CreateRequestDevicePage() {
+function CreateRequestDevicePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const requestId = searchParams.get("requestId");
@@ -173,9 +174,16 @@ function CreateRequestDevicePage() {
             {infoDevice.image && <img src={infoDevice.image} alt="Imagen" style={{maxWidth:180,maxHeight:120,borderRadius:8,marginTop:8}} />}
             <button style={{marginTop:16}} className={styles.addBtn} onClick={()=>setShowInfo(false)}>Cerrar</button>
           </div>
-        </div>
-      )}
+        </div>      )}
     </div>
+  );
+}
+
+function CreateRequestDevicePage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <CreateRequestDevicePageContent />
+    </Suspense>
   );
 }
 

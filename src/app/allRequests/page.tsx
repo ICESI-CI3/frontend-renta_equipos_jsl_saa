@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getAllRequests, acceptRequest, rejectRequest } from "@/services/requestService";
+import { getAllRequests, acceptRequest, rejectRequest } from "@/services";
 
 import { useRouter } from "next/navigation";
 import styles from "../myRequests/myRequests.module.css";
