@@ -1,6 +1,3 @@
-// src/utils/jwt.ts
-
-// Función para decodificar JWT sin verificar la firma (solo para leer el payload)
 export const decodeJWT = (token: string): any => {
   try {
     const base64Url = token.split('.')[1];
@@ -18,7 +15,6 @@ export const decodeJWT = (token: string): any => {
   }
 };
 
-// Función para verificar si el token ha expirado
 export const isTokenExpired = (token: string): boolean => {
   try {
     const decoded = decodeJWT(token);
@@ -31,13 +27,11 @@ export const isTokenExpired = (token: string): boolean => {
   }
 };
 
-// Función centralizada para obtener el token desde localStorage
 export const getToken = (): string | null => {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('token');
 };
 
-// Función para obtener el email del usuario desde el token
 export const getUserEmailFromToken = (): string => {
   const token = getToken();
   if (!token || isTokenExpired(token)) return '';
@@ -46,7 +40,6 @@ export const getUserEmailFromToken = (): string => {
   return decoded?.username || '';
 };
 
-// Función para obtener el rol del usuario desde el token
 export const getUserRoleFromToken = (): string => {
   const token = getToken();
   if (!token || isTokenExpired(token)) return '';
@@ -55,7 +48,6 @@ export const getUserRoleFromToken = (): string => {
   return decoded?.role || '';
 };
 
-// Función para obtener toda la información del usuario desde el token
 export const getUserFromToken = (): { username: string; role: string; sub: string } | null => {
   const token = getToken();
   if (!token || isTokenExpired(token)) return null;

@@ -1,7 +1,4 @@
-// src/services/authService.ts
-import { LoginData } from '@/types/user';
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode";
 import { getToken } from '@/utils';
 
 const api = axios.create({
@@ -30,19 +27,8 @@ export const login = async (data: any) => {
   return response.data;
 }
 
-// Legacy function - remove if not used elsewhere
-const handleLogin = async (credentials : LoginData) => {
-  const data = await login(credentials);
-  if (data && data.token) {
-    localStorage.setItem('token', data.access_token);
-    // Note: email and role are now obtained from JWT token, not stored separately
-  }
-}
-
-// Legacy logout function - now only clears token (email/role come from JWT)
 export const logout = () => {
   localStorage.removeItem('token');
-  // Remove these legacy values if they exist
   localStorage.removeItem('email');
   localStorage.removeItem('role');
 };
