@@ -1,60 +1,70 @@
 'use client';
 
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '../../services/authService';
+import Card from '../../components/ui/Card';
+import LoginForm from '../../components/forms/LoginForm';
 import styles from './login.module.css';
+import { LoginFormData } from '@/types/auth';
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (formData: LoginFormData): Promise<void> => {
+    setIsLoading(true);
+    setError('');
+    
     try {
-      await login({ email, password });
+      await login(formData);
+      
       // Guardar el email del usuario en localStorage para usarlo en la app
       if (typeof window !== 'undefined') {
-        localStorage.setItem('user_email', email);
+        localStorage.setItem('user_email', formData.email);
       }
+      
       router.push('/welcome');
     } catch (error) {
-      alert('Error al iniciar sesión');
+      console.error('Error al iniciar sesión:', error);
+      setError('Credenciales incorrectas. Por favor, intenta nuevamente.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setIsVisible(!isVisible);
-  };
-
   return (
-    <div className={styles.loginContainer}>
-      <h1 className={styles.loginTitle}>Login</h1>
-      <input
-        className={styles.loginInput}
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <div className={styles.passwordContainer}>
-        <input
-          className={styles.loginInput}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          placeholder="Password"
-          type={isVisible ? "text" : "password"}
-        />
-        <span 
-          className={styles.visibilityToggle}
-          onClick={togglePasswordVisibility}
-        >
-          {isVisible ? "👁️" : "👁️‍🗨️"}
-        </span>
+    <div className={styles.container}>
+      <div className={styles.background}>
+        <div className={styles.shape}></div>
+        <div className={styles.shape}></div>
       </div>
-      <button className={styles.loginButton} onClick={handleLogin}>
-        Iniciar sesión
-      </button>
+      
+      <div className={styles.content}>
+        <Card 
+          title="Bienvenido"
+          subtitle="Inicia sesión en tu cuenta"
+        >
+          {error && (
+            <div className={styles.errorAlert}>
+              <span className={styles.errorIcon}>⚠️</span>
+              {error}
+            </div>
+          )}
+          
+          <LoginForm 
+            onSubmit={handleLogin} 
+            isLoading={isLoading}
+          />
+          
+          <div className={styles.footer}>
+            <p className={styles.footerText}>
+              ¿No tienes cuenta? <a href="/register" className={styles.link}>Regístrate aquí</a>
+            </p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }
