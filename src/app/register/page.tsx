@@ -4,62 +4,66 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { register } from '../../services/authService';
 import styles from './register.module.css';
+import RegisterForm from '@/components/forms/RegisterForm';
+import Card from '@/components/ui/Card';
+import { RegisterFormData } from '@/components/forms/RegisterForm';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [name, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [cellphone, setCellphone] = useState('');
-  const [address, setAddress] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
-  const handleRegister = async () => {
+  const handleRegister = async (formData: RegisterFormData) => {
+    setIsLoading(true);
+    setError('');
+
     try {
-      await register({ name, email, password, cellphone, address });
+      // Map RegisterFormData to the expected API format
+      await register({ 
+        name: formData.username, 
+        email: formData.email, 
+        password: formData.password, 
+        cellphone: formData.phone, 
+        address: formData.address 
+      });
       alert('Registro exitoso'); 
       router.push('/login');
     } catch (error) {
-      alert('Error al registrarse');
+      console.error('Error al registrarse:', error);
+      setError('Error al registrarse. Por favor, intenta nuevamente.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles.registerContainer}>
       <h1 className={styles.registerTitle}>Registro</h1>
-      <input
-        className={styles.registerInput}
-        value={name}
-        onChange={e => setUsername(e.target.value)}
-        placeholder="Usuario"
-      />
-      <input
-        className={styles.registerInput}
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        className={styles.registerInput}
-        value={password}
-        onChange={e => setPassword(e.target.value)}
-        placeholder="Password"
-        type="password"
-      />
-      <input
-        className={styles.registerInput}
-        value={cellphone}
-        onChange={e => setCellphone(e.target.value)}
-        placeholder="Celular"
-      />
-      <input
-        className={styles.registerInput}
-        value={address}
-        onChange={e => setAddress(e.target.value)}
-        placeholder="Dirección"
-      />
-      <button className={styles.registerButton} onClick={handleRegister}>
-        Registrarse
-      </button>
+      <div className={styles.content}>
+        <Card 
+          title="Crear cuenta"
+          subtitle="Regístrate para acceder a la plataforma"
+        >
+          {error && (
+            <div className={styles.errorAlert}>
+              <span className={styles.errorIcon}>⚠️</span>
+              {error}
+            </div>
+          )}
+          
+          <RegisterForm 
+            onSubmit={handleRegister} 
+            isLoading={isLoading}
+            error={error}
+          />
+          
+          <div className={styles.footer}>
+            <p className={styles.footerText}>
+              ¿Ya tienes cuenta? <a href="/login" className={styles.link}>Inicia sesión aquí</a>
+            </p>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -39,8 +39,19 @@ export default function RegisterForm({ onSubmit, isLoading = false, error }: Reg
         }));
     };
 
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        
+        if (formData.password !== formData.confirmPassword) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+        
+        onSubmit(formData);
+    };
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <Input
                 type="text"
                 placeholder="Nombre de usuario"
