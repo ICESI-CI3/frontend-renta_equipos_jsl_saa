@@ -1,4 +1,5 @@
 // src/components/home/NavigationLinks.tsx
+import React from 'react';
 import Link from 'next/link';
 import styles from '../../app/home.module.css';
 

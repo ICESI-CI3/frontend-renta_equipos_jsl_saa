@@ -1,4 +1,5 @@
 // src/components/home/HomePage.tsx
+import React from 'react';
 import { HeroSection, NavigationLinks, HomeContainer } from './';
 
 interface NavigationLink {

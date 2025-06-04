@@ -1,6 +1,6 @@
 // src/app/layout.tsx
 import './globals.css'; // Si tienes estilos globales
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import MainNav from '../components/ui/MainNav';
 
 export const metadata = {

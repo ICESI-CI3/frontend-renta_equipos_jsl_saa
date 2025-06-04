@@ -1,7 +1,7 @@
+import React from 'react';
 import { useAuth } from '@/hooks';
 import styles from '../../app/home.module.css';
 import Link from 'next/link';
-import React from 'react';
 
 const DashboardLinks: React.FC = () => {
   const { user } = useAuth();
