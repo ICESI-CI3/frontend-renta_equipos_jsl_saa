@@ -11,10 +11,11 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
   },
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
   transformIgnorePatterns: [
-    '/node_modules/(?!(react|react-dom|@?next|@?testing-library)/)'
+    '/node_modules/(?!(react|react-dom|next|@?next|@?testing-library)/)'
   ],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 };
