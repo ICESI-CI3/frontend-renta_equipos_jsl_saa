@@ -98,7 +98,7 @@ const TestPage = () => {
   return (
     <div className={styles.listDeviceContainer}>
       <div style={{display:'flex',justifyContent:'flex-end',gap:8,marginBottom:16}}>
-        <button className={styles.listDeviceButton} onClick={()=>router.push('/welcome')}>Volver al inicio</button>
+        <button className={styles.listDeviceButton} onClick={()=>router.push('/dashboard')}>Volver al inicio</button>
       </div>
       <form onSubmit={handleSearch} style={{ marginBottom: 24, display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
         <input

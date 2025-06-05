@@ -69,7 +69,7 @@ function AllContractsPage() {
   return (
     <div className={styles.container}>
       <div style={{display:'flex',justifyContent:'flex-end',marginBottom:16}}>
-        <button className={styles.btn} onClick={()=>router.push('/welcome')}>Volver al inicio</button>
+        <button className={styles.btn} onClick={()=>router.push('/dashboard')}>Volver al inicio</button>
       </div>
       <h2 className={styles.title}>Todos los Contratos</h2>
       {loading && <p>Cargando...</p>}
