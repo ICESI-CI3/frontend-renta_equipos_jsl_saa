@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import React, { useState, FormEvent } from 'react';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import styles from './style/Form.module.css';
