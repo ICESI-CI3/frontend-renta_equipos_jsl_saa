@@ -18,4 +18,8 @@ module.exports = {
     '/node_modules/(?!(react|react-dom|next|@?next|@?testing-library)/)'
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/e2e/'
+  ],
 };
