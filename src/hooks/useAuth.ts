@@ -26,7 +26,7 @@ export const useAuth = () => {
     token: null,
     isLoading: true,
   });
-  const router = useRouter();  // Función para verificar el estado de autenticación
+  const router = useRouter();  
   const checkAuth = useCallback(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
@@ -41,7 +41,7 @@ export const useAuth = () => {
           setAuthState({
             isAuthenticated: true,
             user: { 
-              email: decoded.username, // El username es el email
+              email: decoded.username, 
               role: decoded.role,
               username: decoded.username,
               sub: decoded.sub
@@ -50,7 +50,7 @@ export const useAuth = () => {
             isLoading: false,
           });
         } else {
-          // Token inválido o corrupto
+          
           console.log('🟠 CHECKAUTH: Token invalid or corrupted, removing');
           localStorage.removeItem('token');
           setAuthState({
@@ -61,7 +61,7 @@ export const useAuth = () => {
           });
         }
       } else {
-        // Token expirado o no existe
+        
         console.log('🔴 CHECKAUTH: No token or expired, setting as unauthenticated');
         localStorage.removeItem('token');
         setAuthState({

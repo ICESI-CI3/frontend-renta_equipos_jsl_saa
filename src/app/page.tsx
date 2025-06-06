@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 
 // src/app/page.tsx
 import { HomePage } from '../components/home';

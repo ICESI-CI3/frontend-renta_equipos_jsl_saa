@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, InputHTMLAttributes, ReactNode } from 'react';
+import React, { useState, InputHTMLAttributes, ReactNode } from 'react';
 import styles from './style/Input.module.css';
 
 interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {

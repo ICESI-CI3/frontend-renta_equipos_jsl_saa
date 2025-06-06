@@ -1,4 +1,5 @@
 // src/components/home/HeroSection.tsx
+import React from 'react';
 import styles from '../../app/home.module.css';
 
 interface HeroSectionProps {

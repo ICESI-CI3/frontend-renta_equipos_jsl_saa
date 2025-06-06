@@ -6,6 +6,9 @@ export * from './forms';
 // Re-export from home
 export * from './home';
 
+// Re-export from myRequests
+export * from './myRequests';
+
 // Re-export from ui
 export * from './ui';
 

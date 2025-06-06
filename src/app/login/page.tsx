@@ -1,6 +1,6 @@
 'use client';
 
-import { JSX, useState, useEffect } from 'react';
+import React, { JSX, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, LoginForm } from '@/components';
 import styles from './login.module.css';
