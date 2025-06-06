@@ -37,10 +37,17 @@ interface CreateRequestData {
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    // Validación de campos requeridos
     if (!date_Start || !date_Finish) {
       setError("Debes ingresar ambas fechas");
       return;
-    }    // Obtener el email del usuario logueado desde el token
+    }
+    // Si quieres que el comentario sea obligatorio, descomenta:
+    // if (!admin_comment) {
+    //   setError("Debes ingresar un comentario para el administrador");
+    //   return;
+    // }
+    // Obtener el email del usuario logueado desde el token
     const user_email = getUserEmailFromToken();
     if (!user_email) {
       setError("No se encontró el email del usuario. Inicia sesión nuevamente.");

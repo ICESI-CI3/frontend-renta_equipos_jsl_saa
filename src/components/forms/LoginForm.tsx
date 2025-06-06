@@ -42,9 +42,13 @@ export default function LoginForm({ onSubmit, isLoading = false }: LoginFormProp
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    // Validación de campos requeridos
+    if (!formData.email || !formData.password) {
+      alert('Por favor, completa todos los campos requeridos.');
+      return;
+    }
     const newErrors = validateForm();
     setErrors(newErrors);
-    
     if (Object.keys(newErrors).length === 0) {
       onSubmit(formData);
     }

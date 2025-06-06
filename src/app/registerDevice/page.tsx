@@ -15,6 +15,12 @@ const CreateDevicePage = () => {
   const handleSubmit = async (data: RegisterDeviceFormData) => {
     setLoading(true);
     setMessage('');
+    // Validación de campos requeridos
+    if (!data.name || !data.type || !data.description || !data.image) {
+      setMessage('Por favor, completa todos los campos requeridos.');
+      setLoading(false);
+      return;
+    }
     // Obtener email del usuario logeado desde el token
     const userEmail = getUserEmailFromToken();
     if (!userEmail) {

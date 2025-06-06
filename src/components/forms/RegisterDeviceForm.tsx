@@ -70,6 +70,11 @@ export default function RegisterDeviceForm({ onSubmit, isLoading = false, error 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Validación de campos requeridos
+    if (!formData.name || !formData.type || !formData.description || !formData.image) {
+      alert('Por favor, completa todos los campos requeridos.');
+      return;
+    }
     onSubmit(formData);
   };
 
