@@ -41,7 +41,11 @@ export default function RegisterForm({ onSubmit, isLoading = false, error }: Reg
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        
+        // Validación de campos requeridos
+        if (!formData.username || !formData.email || !formData.password || !formData.confirmPassword || !formData.phone || !formData.address) {
+            alert('Por favor, completa todos los campos requeridos.');
+            return;
+        }
         if (formData.password !== formData.confirmPassword) {
             alert('Las contraseñas no coinciden');
             return;
